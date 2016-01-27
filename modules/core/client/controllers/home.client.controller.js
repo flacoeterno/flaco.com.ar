@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('core').controller('HomeController', ['$scope', 'Authentication','$http','$interval',
-	function ($scope,Authentication, $http, $interval) {
+  function ($scope,Authentication, $http, $interval) {
 	// This provides Authentication context.
 	$scope.authentication = Authentication;
 	var url = '/modules/core/client/datasets/items.json';
