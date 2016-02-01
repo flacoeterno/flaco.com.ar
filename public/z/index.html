@@ -1,0 +1,419 @@
+<html>
+  <head>
+  <meta name="twitter:card" content="photo" />
+  <meta name="twitter:title" content="GPU TEXT">
+  <meta name="twitter:description" content=">Look Mom, No HTML!">
+  <meta name="twitter:creator" content="@cabbibo">
+  <meta name="twitter:image:src" content="http://cabbi.bo/Text/img/ftd.gif">
+  <meta name="twitter:domain" content="cabbi.bo">
+    <title> @cabbibo </title>
+    <style>
+      body{ margin: 0px; }
+      html{ overflow: hidden }
+    </style>
+  </head>
+
+  <body>
+
+
+    <!--
+
+
+        Why hello there!
+
+        It seems like you're exploring some weird text!
+      
+        The point of this project is not to make text
+        that is useful, or even pretty, but just to 
+        see what happens when you start using WebGL
+        for text instead of HTML. 
+      
+        As you can see, its pretty powerful!
+
+
+        On the left you will see all the files used
+        to create this page, excluding jquery and 
+        three.js . You can actually render out both
+        of these pieces of text, but for the sake of
+        conciseness, I've choosen not to.
+
+        If you want to play with the code, make sure 
+        to check out the github link on the right!
+
+        There are a bunch of examples to you can find
+        by clicking the colored squares at the bottom.
+
+
+        Also! Please keep in mind that I'm a pretty 
+        shit coder, so if you are trying to use code,
+        its probably better to get it from the examples
+        rather than this page, because this page was
+        hacked together in a day. TextParticles.js is
+        probably the cleanest of all the code.
+
+
+        Have fun & Thanks for visting
+
+        
+        
+
+                                      - Cabbibo
+        
+
+
+    -->
+
+    <script src="lib/three.min.js">             </script>
+    <script src="lib/jquery.min.js">            </script>
+
+    <script src="lib/ShaderLoader.js">          </script>
+
+    <script src="lib/ScrollControls.js">        </script>
+    <script src="lib/ObjectControls.js">        </script>
+    
+    <script src="lib/PhysicsRenderer.js">       </script>
+    
+    <script src="fonts/UbuntuMono.js">          </script>
+    
+    <script src="js/Link.js"                    ></script>
+    <script src="js/PhysicsText.js"             ></script>
+    <script src="js/SocialLinks.js"             ></script>
+    <script src="js/ExampleLinks.js"            ></script>
+    
+    <script src="TextParticles.js">             </script>
+    
+    <script id = "main" >
+
+
+      var camera, renderer, scene , controls , clock;
+      
+      var textParticles;
+
+      var intersectionPlane;
+      var objectControls;
+
+      var links = [];
+
+      var linkInfo = [];
+
+      var loaded = 0;
+      var neededToLoad = 0;
+
+      linkInfo.push({
+        title: 'Social Links',
+        file: 'js/SocialLinks.js'
+      });
+
+      linkInfo.push({
+        title: 'Example Links',
+        file: 'js/SocialLinks.js'
+      });
+
+      linkInfo.push({
+        title: 'Link',
+        file: 'js/Link.js'
+      });
+
+
+      linkInfo.push({
+        title: 'Ubuntu Mono',
+        file: 'fonts/UbuntuMono.js'
+      });
+
+      linkInfo.push({
+        title: 'PhysicsText',
+        file: 'js/PhysicsText.js'
+      });
+
+      linkInfo.push({
+        title: 'Scroll Controls',
+        file: 'lib/ScrollControls.js'
+      });
+
+      linkInfo.push({
+        title: 'Shader Loader',
+        file: 'lib/ShaderLoader.js'
+      });
+
+      linkInfo.push({
+        title: 'Object Controls',
+        file: 'lib/ObjectControls.js'
+      });
+
+
+      linkInfo.push({
+        title: 'Text Particles',
+        file: 'TextParticles.js'
+      });
+
+      var items = [];
+      $.get( '/Text/datasets/items.json', function( data ){
+        items = data;
+      });
+
+      function randomIntFromInterval(min,max)
+      {
+          return Math.floor(Math.random()*(max-min+1)+min);
+      }
+
+      var generate = function(){
+        var text = "";
+        for (var i = 0; i < 8; i++) {
+          text += items[randomIntFromInterval(0,items.length-1)].title;
+          text += "\n";
+        };
+
+          return text;
+      }
+
+      for( var i  = 0; i < linkInfo.length; i++ ){
+
+        neededToLoad ++;
+
+        var info = linkInfo[i]
+        $.get( info.file , function( data ){
+          // this.string = data;
+          // console.log( 'INAS');
+          // console.log( info );
+          onLoad();
+        }.bind( info ) );
+
+      }
+
+      var shaders = new ShaderLoader( 'shaders' );
+
+      neededToLoad ++;
+      shaders.shaderSetLoaded = function(){
+
+        linkInfo.push({
+          title: 'Text Simulation',
+          string: shaders.ss.text
+        });
+
+
+        linkInfo.push({
+          title: 'Text Vertex Shader',
+          string: shaders.vs.text
+        });
+        
+        linkInfo.push({
+          title: 'Text Fragment Shader',
+          string: shaders.fs.text
+        });
+
+
+        linkInfo.push({
+          title: 'Index',
+          string: document.body.parentNode.innerHTML 
+        });
+
+       
+        onLoad();
+
+      }
+
+      shaders.load( 'ss-text' , 'text' , 'simulation'   );
+      
+      shaders.load( 'vs-text' , 'text' , 'vertex'       );
+      shaders.load( 'fs-text' , 'text' , 'fragment'     );
+      
+      shaders.load( 'vs-title' , 'title' , 'vertex'       );
+      shaders.load( 'fs-title' , 'title' , 'fragment'     );
+
+      var G = {}
+
+      G.speed = { type:"f" , value: 0 };
+      G.dT    = { type:"f" , value: 0 };
+      G.time  = { type:"f" , value: 0 };
+      
+      G.repelerPos = { type:"v3" , value: new THREE.Vector3() }
+      G.repelerVel = { type:"v3" , value: new THREE.Vector3() }
+      
+      var soulUniforms = {
+
+        speed:  G.speed,
+        dT:     G.dT,
+        time:   G.time,
+
+        t_og:       { type:"t" , value: null },
+        repelerPos: G.repelerPos,
+        repelerVel: G.repelerVel
+      }
+
+      var bodyUniforms = {
+        speed:  G.speed,
+        dT:     G.dT,
+        time:   G.time,
+        t_oPos: { type:"t" , value: null },
+        repelerPos: G.repelerPos,
+
+      }
+      
+      var v1 = new THREE.Vector3();
+
+      function init(){
+
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        camera = new THREE.PerspectiveCamera( 65 , w/h , .001 , 4 );
+        camera.position.z = 1;
+
+        clock = new THREE.Clock();
+        controls = new ScrollControls( camera );
+        //controls = new THREE.TrackballControls( camera );
+        scene = new THREE.Scene();
+
+        var dpr = window.devicePixelRatio || 1;
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio( dpr );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        document.body.appendChild( renderer.domElement );
+
+      
+        /*
+
+           Object Control stuff!!!!
+
+        */ 
+
+        objectControls = new ObjectControls( camera );
+
+
+        var geo = new THREE.PlaneGeometry( 100000 , 100000 );
+        var mat = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
+        intersectionPlane = new THREE.Mesh( geo , mat );
+        intersectionPlane.visible = false;  
+        intersectionPlane.position.z = .05
+        scene.add( intersectionPlane );
+
+
+        light = new THREE.PointLight( 0xffffff , 1. , 1 );
+        scene.add( light );
+
+        var font = UbuntuMono( 'fonts/UbuntuMono.png' );
+
+        var vs = shaders.vertexShaders.text;
+        var fs = shaders.fragmentShaders.text;
+        var ss = shaders.simulationShaders.text;
+
+
+
+        for( var i = 0; i < linkInfo.length; i++ ){
+
+          //console.log( linkInfo[i].title );
+          //console.log( linkInfo[i].string );
+          link = new Link( font , linkInfo[i].title , generate() );
+      
+          var p = new THREE.Vector3();
+          p.set( -1.00, (i / linkInfo.length) * 1 -.43 , 0 );
+       
+          link.add( scene , p );
+          links.push( link );
+
+
+        }
+
+        var findPoem = function(){
+          links[randomIntFromInterval(0,links.length-1)].select();  
+        }
+        setInterval(function(){
+          findPoem();
+        },6000);
+
+        findPoem();
+        
+        
+
+
+        socialLinks = SocialLinks();
+
+        socialLinks.position.x = 1.;
+        socialLinks.scale.multiplyScalar( .13 );
+
+      
+        // scene.add( socialLinks );
+
+        exampleLinks = ExampleLinks();
+
+        // // exampleLinks.position.x = 1.;
+        // // exampleLinks.position.y = -.5;
+        // // exampleLinks.scale.multiplyScalar( .074);
+
+        // // // scene.add( exampleLinks );
+
+        window.addEventListener( 'resize', onWindowResize, false );
+
+      }
+
+      
+      function animate(){
+
+        requestAnimationFrame( animate );
+        controls.update();
+        G.speed.value = controls.speed;
+        G.dT.value = clock.getDelta();
+        G.time.value += G.dT.value;
+      
+        objectControls.update();
+
+        var raycaster = objectControls.raycaster;
+        var i = raycaster.intersectObject( intersectionPlane );
+
+        if( !i[0] ){ 
+          console.log( 'something is terribly wrong' );
+        }else{
+          G.repelerVel.value.copy( G.repelerPos.value );
+          G.repelerPos.value.copy( i[0].point );
+          G.repelerVel.value.sub( G.repelerPos.value );
+        }
+
+        light.position.copy( G.repelerPos.value ); 
+        
+        for( var i = 0; i< links.length; i++ ){
+          links[i].update();        
+        }     
+
+
+        socialLinks.position.copy( camera.position );
+
+        v1.set( 1. , -.2 , -1 );
+        socialLinks.position.add( v1); 
+
+
+        exampleLinks.position.copy( camera.position );
+
+        v1.set( -.96 , -.51 , -1 );
+        exampleLinks.position.add( v1);   
+               
+        
+        renderer.render( scene , camera );
+
+      }
+
+
+      function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+      function onLoad(){
+
+        loaded ++;
+        if( loaded == neededToLoad ){
+
+          init();
+          animate();
+
+        }
+      }
+
+    </script>
+
+  </body>
+</html>
