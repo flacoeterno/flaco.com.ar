@@ -2,13 +2,14 @@ function SocialLinks(){
 
 
 
-  var gh ="https://github.com/cabbibo/Text/tree/gh-pages"
-  var t = "http://twitter.com/share?text=Look%20Mom%20No%20HTML%21%20:%20&url=http://cabbi.bo/Text/%20(%20by%20@cabbibo%20)"
+  var gh ="https://github.com/flacoeterno/flaco.com.ar"
+  var t = "http://twitter.com/share?text=";
+  var fb = "https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https://developers.facebook.com";
   var links = [
 
     [ "img/icons/twitter_2.png" , t  ],
-    [ "img/icons/cabbibo_2.png" , "http://cabbi.bo"     ],
-    [ "img/icons/github_2.png"  , gh ]
+    [ "img/icons/github_2.png"  , gh ],
+    [ "img/icons/facebook_2.png"  , fb ]
   ];
 
   var geo = new THREE.PlaneBufferGeometry( 1 , 1 );

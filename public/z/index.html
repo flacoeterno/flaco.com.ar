@@ -1,12 +1,12 @@
 <html>
   <head>
   <meta name="twitter:card" content="photo" />
-  <meta name="twitter:title" content="GPU TEXT">
-  <meta name="twitter:description" content=">Look Mom, No HTML!">
-  <meta name="twitter:creator" content="@cabbibo">
-  <meta name="twitter:image:src" content="http://cabbi.bo/Text/img/ftd.gif">
-  <meta name="twitter:domain" content="cabbi.bo">
-    <title> @cabbibo </title>
+  <meta name="twitter:title" content="Spinetta">
+  <meta name="twitter:description" content="L!">
+  <meta name="twitter:creator" content="@laboratorioSpineteano">
+  <meta name="twitter:image:src" content="">
+  <meta name="twitter:domain" content="flaco.com.ar">
+    <title> Z - Letras Generadas </title>
     <style>
       body{ margin: 0px; }
       html{ overflow: hidden }
@@ -309,14 +309,14 @@
           var p = new THREE.Vector3();
           p.set( -1.00, (i / linkInfo.length) * 1 -.43 , 0 );
        
-          link.add( scene , p );
-          links.push( link );
+          // link.add( scene , p );
+          // links.push( link );
 
 
         }
 
         var findPoem = function(){
-          links[randomIntFromInterval(0,links.length-1)].select();  
+          // links[randomIntFromInterval(0,links.length-1)].select();  
         }
         setInterval(function(){
           findPoem();
@@ -333,15 +333,15 @@
         socialLinks.scale.multiplyScalar( .13 );
 
       
-        // scene.add( socialLinks );
+        scene.add( socialLinks );
 
         exampleLinks = ExampleLinks();
 
-        // // exampleLinks.position.x = 1.;
-        // // exampleLinks.position.y = -.5;
-        // // exampleLinks.scale.multiplyScalar( .074);
+        // exampleLinks.position.x = 1.;
+        // exampleLinks.position.y = -.5;
+        // exampleLinks.scale.multiplyScalar( .074);
 
-        // // // scene.add( exampleLinks );
+        // scene.add( exampleLinks );
 
         window.addEventListener( 'resize', onWindowResize, false );
 
