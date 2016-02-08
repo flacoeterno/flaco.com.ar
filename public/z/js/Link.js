@@ -67,8 +67,8 @@ function Link( font , title , string ){
         vs:vs , 
         fs:fs , 
         params:{
-          letterWidth: .05,
-          lineLength: 20,
+          letterWidth: .0375,
+          lineLength: 35,
           uniforms: this.bodyUniforms 
 
         }
