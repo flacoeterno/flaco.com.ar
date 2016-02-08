@@ -117,7 +117,7 @@
           text += "\n";
         };
 
-        return text;
+          return text;
       }
 
       for( var i  = 0; i < linkInfo.length; i++ ){
@@ -232,9 +232,11 @@
 
 
 
-        for( var i = 0; i < 20; i++ ){
+        for( var i = 0; i < 35 ; i++ ){
 
-          link = new Link( font , "i" , "zzzzzz \n zzzz \n zzzz " );
+          //console.log( linkInfo[i].title );
+          //console.log( linkInfo[i].string );
+          link = new Link( font , i+i+"" , generate() );
       
           var p = new THREE.Vector3();
           p.set( -1.00, (i / linkInfo.length) * 1 -.43 , 0 );
@@ -249,11 +251,11 @@
             links[randomIntFromInterval(0,links.length-1)].select();  
         };
         window.run = findPoem;
-        // setInterval(function(){
-        //   findPoem();
-        // },6000);
+        setInterval(function(){
+          findPoem();
+        },6000);
 
-        // findPoem();
+        findPoem();
         
         
 
