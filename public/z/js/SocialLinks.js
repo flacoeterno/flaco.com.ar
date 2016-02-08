@@ -7,9 +7,9 @@ function SocialLinks(){
   var fb = "https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https://developers.facebook.com";
   var links = [
 
-    [ "img/icons/twitter_2.png" , t  ],
-    [ "img/icons/github_2.png"  , gh ],
-    [ "img/icons/facebook_2.png"  , fb ]
+    [ "/z/img/icons/twitter_2.png" , t  ],
+    [ "/z/img/icons/github_2.png"  , gh ],
+    [ "/z/img/icons/facebook_2.png"  , fb ]
   ];
 
   var geo = new THREE.PlaneBufferGeometry( 1 , 1 );
