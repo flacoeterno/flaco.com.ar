@@ -99,52 +99,6 @@
       var loaded = 0;
       var neededToLoad = 0;
 
-      linkInfo.push({
-        title: 'Social Links',
-        file: 'js/SocialLinks.js'
-      });
-
-      linkInfo.push({
-        title: 'Example Links',
-        file: 'js/SocialLinks.js'
-      });
-
-      linkInfo.push({
-        title: 'Link',
-        file: 'js/Link.js'
-      });
-
-
-      linkInfo.push({
-        title: 'Ubuntu Mono',
-        file: 'fonts/UbuntuMono.js'
-      });
-
-      linkInfo.push({
-        title: 'PhysicsText',
-        file: 'js/PhysicsText.js'
-      });
-
-      linkInfo.push({
-        title: 'Scroll Controls',
-        file: 'lib/ScrollControls.js'
-      });
-
-      linkInfo.push({
-        title: 'Shader Loader',
-        file: 'lib/ShaderLoader.js'
-      });
-
-      linkInfo.push({
-        title: 'Object Controls',
-        file: 'lib/ObjectControls.js'
-      });
-
-
-      linkInfo.push({
-        title: 'Text Particles',
-        file: 'TextParticles.js'
-      });
 
       var items = [];
       $.get( '/z/datasets/items.json', function( data ){
@@ -163,7 +117,7 @@
           text += "\n";
         };
 
-          return text;
+        return text;
       }
 
       for( var i  = 0; i < linkInfo.length; i++ ){
@@ -185,29 +139,7 @@
       neededToLoad ++;
       shaders.shaderSetLoaded = function(){
 
-        linkInfo.push({
-          title: 'Text Simulation',
-          string: shaders.ss.text
-        });
-
-
-        linkInfo.push({
-          title: 'Text Vertex Shader',
-          string: shaders.vs.text
-        });
         
-        linkInfo.push({
-          title: 'Text Fragment Shader',
-          string: shaders.fs.text
-        });
-
-
-        linkInfo.push({
-          title: 'Index',
-          string: document.body.parentNode.innerHTML 
-        });
-
-       
         onLoad();
 
       }
@@ -300,29 +232,28 @@
 
 
 
-        for( var i = 0; i < linkInfo.length; i++ ){
+        for( var i = 0; i < 20; i++ ){
 
-          //console.log( linkInfo[i].title );
-          //console.log( linkInfo[i].string );
-          link = new Link( font , linkInfo[i].title , generate() );
+          link = new Link( font , "i" , "zzzzzz \n zzzz \n zzzz " );
       
           var p = new THREE.Vector3();
           p.set( -1.00, (i / linkInfo.length) * 1 -.43 , 0 );
        
-          // link.add( scene , p );
-          // links.push( link );
+          link.add( scene , p );
+          links.push( link );
 
 
         }
 
         var findPoem = function(){
-          // links[randomIntFromInterval(0,links.length-1)].select();  
-        }
-        setInterval(function(){
-          findPoem();
-        },6000);
+            links[randomIntFromInterval(0,links.length-1)].select();  
+        };
+        window.run = findPoem;
+        // setInterval(function(){
+        //   findPoem();
+        // },6000);
 
-        findPoem();
+        // findPoem();
         
         
 
@@ -414,6 +345,15 @@
       }
 
     </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-72895167-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
   </body>
 </html>

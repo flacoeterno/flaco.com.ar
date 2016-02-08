@@ -57,7 +57,7 @@ function PhysicsText( soulParams , bodyParams ){
     this.soul.addBoundTexture(this.bodyUniforms.t_ooPos , 'ooOutput' ); 
   }
 
-  this.soul.resetRand( 5 );
+  this.soul.resetRand( 20 );
 
 
 
