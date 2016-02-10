@@ -5,10 +5,10 @@ $( document ).ready( function () {
       return Math.floor(Math.random()*(max-min+1)+min);
   }
   
-  var currentPhoto = '/k/img/k/laspinetta' + randomIntFromInterval(1,2) +'.jpg';
+  var currentPhoto = '/k/img/k/laspinetta' + randomIntFromInterval(1,2,3,4) +'.jpg';
   var parameters ={
-    s:10,
-    n:4,
+    s:1,
+    n:6,
     src: currentPhoto,
   }
 

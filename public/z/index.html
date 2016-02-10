@@ -293,7 +293,7 @@
         var i = raycaster.intersectObject( intersectionPlane );
 
         if( !i[0] ){ 
-          console.log( 'something is terribly wrong' );
+        //console.log( 'something is terribly wrong' );
         }else{
           G.repelerVel.value.copy( G.repelerPos.value );
           G.repelerPos.value.copy( i[0].point );

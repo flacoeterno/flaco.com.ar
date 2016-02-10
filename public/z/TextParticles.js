@@ -45,8 +45,8 @@
   
     var lines =  Math.ceil( particles.length / this.lineLength );
   
-    console.log( particles ); 
-    console.log( particles.numberOfLines ); 
+    //console.log( particles ); 
+    //console.log( particles.numberOfLines ); 
     particleSystem.totalWidth  = this.width;
     particleSystem.totalHeight = particles.numberOfLines * this.lineHeight;
 
@@ -359,7 +359,7 @@
 
     if( !index ){
      
-      console.log('NO LETTER' );
+      //console.log('NO LETTER' );
       index = [0,0];
 
     }
@@ -423,12 +423,12 @@
    
     if( params.uniforms ){
       for( var propt in params.uniforms ){
-        console.log( params.uniforms );
+        //console.log( params.uniforms );
         uniforms[ propt ] = params.uniforms[ propt ];
       }
     }
 
-    console.log( uniforms );
+    // console.log( uniforms );
 
     var attr  = attributes;
 
