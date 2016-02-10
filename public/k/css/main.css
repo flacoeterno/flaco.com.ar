@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Flaco';
+  src: url('/assets/fonts/flaco.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/flaco.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/flaco.woff') format('woff'), /* Modern Browsers */
+       url('/assets/fonts/flaco.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/flaco.svg#c9f2ef49e356a293a0aa987f5cf3499c') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
+}
+
+body {
+}
+
+.contenido {
+  display: table;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 100;
+  color: #E6E8BA;
+}
+
+h1 {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'Flaco', Helvetica, Arial, _sans;
+    font-size: 96px;
+    font-weight: normal;
+    text-align: center;
+    margin: auto;
+    text-transform: lowercase;
+    pointer-events: none;
+    
+}
+
+ul {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  z-index: 101;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+li {
+  display: inline-block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, _sans;
+  font-weight: 100;
+  font-size: 32px;
+  padding-right: 32px;
+}
