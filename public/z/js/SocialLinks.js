@@ -3,8 +3,8 @@ function SocialLinks(){
 
 
   var gh ="https://github.com/flacoeterno/flaco.com.ar"
-  var t = "http://twitter.com/share?text=";
-  var fb = "https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=https://developers.facebook.com";
+  var t = "http://twitter.com/share?text=" + encodeURIComponent("Descubri mas poesia #spinetteana http://flaco.com.ar/z/");
+  var fb = "https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=http://flaco.com.ar/z/";
   var links = [
 
     [ "/z/img/icons/twitter_2.png" , t  ],
